@@ -1,0 +1,8 @@
+cradle:
+  stack:
+    - path: "./team"
+      component: "hike:exe:team"
+    - path: "./supplier"
+      component: "hike:exe:supplier"
+    - path: "./admin"
+      component: "hike:exe:admin"

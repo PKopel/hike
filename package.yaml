@@ -1,0 +1,46 @@
+name: hike
+version: 0.1.0.0
+github: "PKopel/hike"
+license: BSD3
+author: "Paweł Kopel"
+maintainer: "pawel.kopel2@gmail.com"
+copyright: "2021 Paweł Kopel"
+
+extra-source-files:
+  - README.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description: Please see the README on GitHub at <https://github.com/PKopel/hike#readme>
+
+dependencies:
+  - base >= 4.7 && < 5
+  - amqp
+
+executables:
+  team:
+    main: Main.hs
+    source-dirs: team
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+  supplier:
+    main: Main.hs
+    source-dirs: supplier
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+  admin:
+    main: Main.hs
+    source-dirs: admin
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
