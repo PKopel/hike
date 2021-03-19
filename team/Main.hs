@@ -1,4 +1,10 @@
 module Main where
 
 main :: IO ()
-main = getLine >>= putStrLn
+main = placeOrder
+
+placeOrder :: IO ()
+placeOrder = do
+  putStrLn "Place order: "
+  order <- getLine
+  placeOrder
