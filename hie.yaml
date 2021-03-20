@@ -6,5 +6,5 @@ cradle:
       component: "hike:exe:supplier"
     - path: "./admin"
       component: "hike:exe:admin"
-    - path: "./src"
+    - path: "."
       component: "hike:lib"

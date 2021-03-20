@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: eb4a15df1702b465dcb4c1234d14a5cf67ad24b13bada06f645a8c401004a23e
+-- hash: 4eb10de5305753eedccb845b0329ea3370b56a842b6783857a4ba15033cd1bb9
 
 name:           hike
 version:        0.1.0.0
@@ -30,7 +30,7 @@ library
   other-modules:
       Paths_hike
   hs-source-dirs:
-      src
+      ./.
   build-depends:
       amqp
     , base >=4.7 && <5
