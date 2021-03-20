@@ -25,8 +25,8 @@ main = do
 
 placeOrder :: String -> Channel -> IO ()
 placeOrder name chan = putStrLn "Place order: " >> getLine >>= \case
-  "exit" -> return ()
-  order  -> do
+  ""    -> return ()
+  order -> do
     publishMsg
       chan
       consExchange
