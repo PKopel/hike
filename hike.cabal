@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 070e5a3ae4359beda1fce976842a3bf268f44a842831f82d216478815da77554
+-- hash: eb4a15df1702b465dcb4c1234d14a5cf67ad24b13bada06f645a8c401004a23e
 
 name:           hike
 version:        0.1.0.0
@@ -24,6 +24,20 @@ source-repository head
   type: git
   location: https://github.com/PKopel/hike
 
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_hike
+  hs-source-dirs:
+      src
+  build-depends:
+      amqp
+    , base >=4.7 && <5
+    , bytestring
+    , text
+  default-language: Haskell2010
+
 executable admin
   main-is: Main.hs
   other-modules:
@@ -35,6 +49,7 @@ executable admin
       amqp
     , base >=4.7 && <5
     , bytestring
+    , hike
     , text
   default-language: Haskell2010
 
@@ -49,6 +64,7 @@ executable supplier
       amqp
     , base >=4.7 && <5
     , bytestring
+    , hike
     , text
   default-language: Haskell2010
 
@@ -63,5 +79,6 @@ executable team
       amqp
     , base >=4.7 && <5
     , bytestring
+    , hike
     , text
   default-language: Haskell2010

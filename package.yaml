@@ -24,10 +24,15 @@ dependencies:
   - bytestring
   - text
 
+library:
+  source-dirs: src
+
 executables:
   team:
     main: Main.hs
     source-dirs: team
+    dependencies:
+      - hike
     ghc-options:
       - -threaded
       - -rtsopts
@@ -35,6 +40,8 @@ executables:
   supplier:
     main: Main.hs
     source-dirs: supplier
+    dependencies:
+      - hike
     ghc-options:
       - -threaded
       - -rtsopts
@@ -42,6 +49,8 @@ executables:
   admin:
     main: Main.hs
     source-dirs: admin
+    dependencies:
+      - hike
     ghc-options:
       - -threaded
       - -rtsopts
