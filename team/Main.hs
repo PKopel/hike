@@ -28,10 +28,5 @@ placeOrder name chan = putStrLn "Place order: " >> getLine >>= \case
   ""    -> return ()
   order -> do
     let msg = order <> " from " <> name
-    putStrLn $ "sending message: " <> msg
-    publishMsg
-      chan
-      hikeExchange
-      ("order." <> T.pack order)
-      newMsg { msgBody = BL.pack msg, msgDeliveryMode = Just Persistent }
+    sendMsg chan ("order." <> T.pack order) msg
     placeOrder name chan

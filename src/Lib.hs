@@ -17,3 +17,13 @@ createExchange chan = declareExchange
 processMsg :: (Message, Envelope) -> IO ()
 processMsg (msg, env) =
   putStrLn ("received message: " <> BL.unpack (msgBody msg)) >> ackEnv env
+
+sendMsg :: Channel -> T.Text -> String -> IO ()
+sendMsg chan key msg = do
+  putStrLn $ "sending message: " <> msg
+  publishMsg
+    chan
+    hikeExchange
+    key
+    newMsg { msgBody = BL.pack msg, msgDeliveryMode = Just Persistent }
+  return ()

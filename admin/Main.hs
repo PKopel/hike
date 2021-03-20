@@ -31,10 +31,5 @@ sendMessage chan = putStrLn "Receiver: " >> getLine >>= \case
         receiver = T.pack $ case other of
           "all" -> "team.supplier"
           _     -> other
-    putStrLn $ "sending message: " <> msg
-    publishMsg
-      chan
-      hikeExchange
-      receiver
-      newMsg { msgBody = BL.pack msg, msgDeliveryMode = Just Persistent }
+    sendMsg chan receiver msg
     sendMessage chan

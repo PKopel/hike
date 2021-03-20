@@ -43,10 +43,5 @@ processOrder supp oidMV chan (msg, env) = do
       resp    = supp <> ": order " <> show oid <> ", " <> product <> " ready"
   putStrLn ("received order: " <> body <> "; id: " <> show oid)
   ackEnv env
-  putStrLn $ "sending message: " <> resp
-  publishMsg
-    chan
-    hikeExchange
-    ("ack." <> T.pack team)
-    newMsg { msgBody = BL.pack resp, msgDeliveryMode = Just Persistent }
+  sendMsg chan ("ack." <> T.pack team) resp
   putMVar oidMV (oid + 1)
