@@ -14,11 +14,12 @@ main = do
   chan <- openChannel conn
   name <- putStrLn "team name:" >> getLine
   let nameT = T.pack name
+      nameQ = nameT <> "_queue"
   createExchange chan
-  declareQueue chan newQueue { queueName = nameT }
-  bindQueue chan nameT hikeExchange "team.#"
-  bindQueue chan nameT hikeExchange ("ack." <> nameT)
-  queue <- consumeMsgs chan nameT Ack processMsg
+  declareQueue chan newQueue { queueName = nameQ }
+  bindQueue chan nameQ hikeExchange "team.#"
+  bindQueue chan nameQ hikeExchange ("ack." <> nameT)
+  queue <- consumeMsgs chan nameQ Ack processMsg
   placeOrder name chan
   cancelConsumer chan queue
   closeConnection conn

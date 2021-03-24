@@ -5,7 +5,6 @@ import           Network.AMQP
 import qualified Data.Text                     as T
 import qualified Data.Text.IO                  as TIO
 import qualified Data.ByteString.Lazy.Char8    as BL
-import           Control.Monad                  ( (>=>) )
 import           Control.Concurrent.MVar
 import           Lib
 
@@ -14,12 +13,12 @@ main = do
   conn <- openConnection "127.0.0.1" "/" "guest" "guest"
   chan <- openChannel conn
   name <- putStrLn "supplier name:" >> getLine
-  let nameT = T.pack name
+  let nameQ = T.pack name <> "_queue"
   oidMV <- newMVar 0
   createExchange chan
-  declareQueue chan newQueue { queueName = nameT }
-  bindQueue chan nameT hikeExchange "#.supplier"
-  queue <- consumeMsgs chan nameT Ack processMsg
+  declareQueue chan newQueue { queueName = nameQ }
+  bindQueue chan nameQ hikeExchange "#.supplier"
+  queue <- consumeMsgs chan nameQ Ack processMsg
   putStrLn "Enter list of available supplies: "
   queues <- TIO.getLine >>= createQueues name oidMV chan . T.words
   getLine -- press enter to stop
@@ -27,12 +26,12 @@ main = do
   closeConnection conn
 
 createQueues :: String -> MVar Int -> Channel -> [T.Text] -> IO [ConsumerTag]
-createQueues supp oidMV chan = mapM (declare >=> bind)
+createQueues supp oidMV chan = mapM create
  where
-  declare name = declareQueue chan newQueue { queueName = name }
-  bind (name, _, _) = do
-    bindQueue chan name hikeExchange ("order." <> name)
-    consumeMsgs chan name Ack $ processOrder supp oidMV chan
+  create name = do
+    declareQueue chan newQueue { queueName = name <> "_queue" }
+    bindQueue chan (name <> "_queue") hikeExchange ("order." <> name)
+    consumeMsgs chan (name <> "_queue") Ack $ processOrder supp oidMV chan
 
 processOrder :: String -> MVar Int -> Channel -> (Message, Envelope) -> IO ()
 processOrder supp oidMV chan (msg, env) = do

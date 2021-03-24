@@ -12,11 +12,12 @@ main :: IO ()
 main = do
   conn <- openConnection "127.0.0.1" "/" "guest" "guest"
   chan <- openChannel conn
+  let nameQ = "admin_queue"
   createExchange chan
-  declareQueue chan newQueue { queueName = "admin" }
-  bindQueue chan "admin" hikeExchange "order.*"
-  bindQueue chan "admin" hikeExchange "ack.*"
-  queue <- consumeMsgs chan "admin" Ack processMsg
+  declareQueue chan newQueue { queueName = nameQ }
+  bindQueue chan nameQ hikeExchange "order.*"
+  bindQueue chan nameQ hikeExchange "ack.*"
+  queue <- consumeMsgs chan nameQ Ack processMsg
   sendMessage chan
   cancelConsumer chan queue
   closeConnection conn
